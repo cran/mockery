@@ -1,7 +1,8 @@
 # mockery
-[![Travis-CI Build Status](https://travis-ci.org/n-s-f/mockery.svg?branch=master)](https://travis-ci.org/n-s-f/mockery)
-[![Coverage Status](https://img.shields.io/codecov/c/github/n-s-f/mockery/master.svg)](https://codecov.io/github/n-s-f/mockery?branch=master)
-[![CRAN version](http://www.r-pkg.org/badges/version/mockery)](https://cran.r-project.org/package=mockery)
+[![Travis-CI Build Status](https://travis-ci.org/r-lib/mockery.svg?branch=master)](https://travis-ci.org/r-lib/mockery)
+[![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/mockery/master.svg)](https://codecov.io/github/r-lib/mockery?branch=master)
+[![CRAN version](http://www.r-pkg.org/badges/version/mockery)](https://CRAN.r-project.org/package=mockery)
+[![Downloads](http://cranlogs.r-pkg.org/badges/mockery)](https://CRAN.r-project.org/package=mockery)
 
 A mocking library for R.
 
@@ -9,19 +10,18 @@ A mocking library for R.
 
 To install the latest CRAN release:
 
-```.R
-> install.packages('mockery')
+```R
+install.packages('mockery')
 ```
 
-To install directly from the source code in this github repository:
+To install directly from the source code in this GitHub repository:
 
-```.R
-> # If you don't have devtools installed yet:
-> install.packages('devtools')
->
-> # Then:
-> library('devtools')
-> devtools::install_github('n-s-f/mockery')
+```R
+# If you don't have devtools installed yet:
+install.packages('devtools')
+
+# Then:
+devtools::install_github('r-lib/mockery')
 ```
 
 ### Testing
@@ -38,7 +38,7 @@ compatible.
 
 ##### Examples
 
-```.R
+```R
 g = function(y) y
 f = function(x) g(x) + 1
 test_that('demonstrate stubbing', {
@@ -54,7 +54,7 @@ test_that('demonstrate stubbing', {
 
 Stubbing works with classes of all descriptions and namespaced functions:
 
-```.R
+```R
 # this stubs the 'request_perform' function, but only
 # for httr::get, and only when it is called from within this
 # test function
@@ -76,7 +76,7 @@ In the example below, the function `g` is both called directly from `r`, which
 we call from the test, and from `f`, which `r` calls. By specifying a depth of
 2, we tell mockery to stub `g` in both places.
 
-```.R
+```R
 g = function(y) y
 f = function(x) g(x) + 1
 r = function(x) g(x) + f(x)
@@ -112,31 +112,31 @@ out only when it is called from a specified function.
 Mock objects allow you to specify the behavior of the function you've stubbed
 out while also verifying how that function was used. 
 
-```.R
+```R
 g = function(y) y
 f = function(x) g(x) + 1
 test_that('demonstrate mock object usage', {
     # mocks can specify behavior
     mock = mock(100)
     stub(f, 'g', mock)
-    result = g(5)
+    result = f(5)
     expect_equal(result, 101)
 
     # and allow you to make assertions on the mock was treated
     expect_called(mock, 1)
-    expect_args(mock, 5)
+    expect_args(mock, 1, 5)
 })
 ```
 
 You can also specify multiple return values
 
-```.R 
+```R
 mock = mock(1, "a", sqrt(3))
 ```
 
 and access the arguments with which it was called.
 
-```.R
+```R
 mock <- mock()
 mock(x = 1)
 mock(y = 2)

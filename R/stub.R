@@ -81,14 +81,10 @@ mock_through_tree <- function(tree, what, how) {
 }
 
 override_seperators = function(name, env) {
-    for (sep in c('::', "\\$")) {
-        if (grepl(sep, name)) {
-            elements <- strsplit(name, sep)
-            mangled_name <- paste(elements[[1]][1], elements[[1]][2], sep='XXX')
-
-            if (sep == '\\$') {
-                sep <- '$'
-            }
+    for (sep in c('::', "$")) {
+        if (grepl(sep, name, fixed = TRUE)) {
+            elements <- strsplit(name, sep, fixed = TRUE)
+            mangled_name <- paste(elements[[1L]][1L], elements[[1L]][2L], sep='XXX')
 
             stub_list <- c(mangled_name)
             if ("stub_list" %in% names(attributes(get(sep, env)))) {
@@ -100,6 +96,10 @@ override_seperators = function(name, env) {
         }
     }
     return(if (exists('mangled_name')) mangled_name else name)
+}
+
+backtick <- function(x) {
+    encodeString(x, quote = "`", na.encode = FALSE)
 }
 
 create_create_new_name_function <- function(stub_list, env, sep)
@@ -114,7 +114,7 @@ create_create_new_name_function <- function(stub_list, env, sep)
         func_name <- deparse(substitute(func))
         for(stub in stub_list) {
             if (paste(pkg_name, func_name, sep='XXX') == stub) {
-                return(eval(parse(text = stub), env))
+                return(eval(parse(text = backtick(stub)), env))
             }
         }
 
@@ -122,7 +122,7 @@ create_create_new_name_function <- function(stub_list, env, sep)
         eval_env = new.env(parent=parent.frame())
         assign(sep, eval(parse(text=paste0('`', sep, '`'))), eval_env)
 
-        code = paste(pkg_name, func_name, sep=sep)
+        code = paste(pkg_name, backtick(func_name), sep=sep)
         return(eval(parse(text=code), eval_env))
     }
     attributes(create_new_name) <- list(stub_list=stub_list)
