@@ -1,6 +1,6 @@
 Package: mockery
 Title: Mocking Library for R
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: c(
     person("Noam", "Finkelstein", role = "aut"),
     person("Lukasz", "Bartnik", role = "aut"),
@@ -20,14 +20,14 @@ Imports: testthat
 Suggests: knitr, R6, rmarkdown (>= 1.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Collate: 'expectations.R' 'mockery.R' 'mock-object.R' 'stub.R'
 NeedsCompilation: no
-Packaged: 2022-02-19 14:18:34 UTC; hadleywickham
+Packaged: 2023-09-26 18:14:16 UTC; hadleywickham
 Author: Noam Finkelstein [aut],
   Lukasz Bartnik [aut],
   Jim Hester [aut],
   Hadley Wickham [aut, cre]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2022-02-20 13:00:02 UTC
+Date/Publication: 2023-09-26 18:50:02 UTC
