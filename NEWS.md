@@ -1,3 +1,8 @@
+# mockery 0.4.5
+
+* Documentation fixes for `R CMD check`.
+* Eliminate use of deprecated `testthat::with_mock()`.
+
 # mockery 0.4.4
 
 * Fixes for `R CMD check`
